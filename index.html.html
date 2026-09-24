@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Lista de Presentes — Cíntia e Victor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=EB+Garamond:wght@400;500;600&family=Alex+Brush&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-deep:#1f3b2c;
+    --green-mid:#2c5240;
+    --green-soft:#436854;
+    --cream:#faf6ee;
+    --card:#f1ece0;
+    --card-line:#d8d0bd;
+    --ink:#26321f;
+    --taken:#b9b3a4;
+  }
+  *{box-sizing:border-box;}
+  html,body{ background:var(--cream); }
+  body{
+    margin:0;
+    color:var(--ink);
+    font-family:'EB Garamond', serif;
+    line-height:1.5;
+    padding-top:env(safe-area-inset-top, 0px);
+    padding-bottom:env(safe-area-inset-bottom, 0px);
+  }
+  .page{
+    max-width:900px;
+    margin:0 auto;
+    padding:36px 20px 60px;
+  }
+  header{
+    text-align:center;
+    margin-bottom:36px;
+  }
+  .monogram{
+    font-family:'Playfair Display', serif;
+    font-size:34px;
+    font-weight:600;
+    letter-spacing:10px;
+    color:var(--green-deep);
+  }
+  .rule{
+    width:64px;
+    height:1px;
+    background:var(--green-mid);
+    margin:14px auto;
+  }
+  .kicker{
+    font-family:'Playfair Display', serif;
+    letter-spacing:6px;
+    font-size:15px;
+    color:var(--green-mid);
+    margin-bottom:4px;
+  }
+  .script{
+    font-family:'Alex Brush', cursive;
+    font-size:64px;
+    color:var(--green-deep);
+    margin:0 0 6px;
+    line-height:1;
+  }
+  .couple-pill{
+    display:inline-block;
+    background:var(--green-deep);
+    color:var(--cream);
+    padding:10px 30px;
+    border-radius:30px;
+    font-family:'Playfair Display', serif;
+    font-size:20px;
+    letter-spacing:2px;
+    margin:14px 0 18px;
+  }
+  .intro{
+    max-width:520px;
+    margin:0 auto;
+    font-size:19px;
+    color:var(--green-deep);
+  }
+  section.panel{
+    border:1px solid var(--green-mid);
+    border-radius:18px;
+    padding:28px 22px 30px;
+    margin-bottom:26px;
+    background:rgba(255,255,255,0.35);
+  }
+  .panel-title{
+    text-align:center;
+    margin:-46px auto 24px;
+    width:fit-content;
+    background:var(--green-deep);
+    color:var(--cream);
+    padding:9px 26px;
+    border-radius:20px;
+    font-family:'Playfair Display', serif;
+    font-size:17px;
+    letter-spacing:2px;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(130px, 1fr));
+    gap:16px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--card-line);
+    border-radius:12px;
+    padding:16px 10px 14px;
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    position:relative;
+    transition:opacity .2s ease;
+  }
+  .card svg{
+    width:44px;
+    height:44px;
+    stroke:var(--green-deep);
+    stroke-width:2.4;
+    fill:none;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .card .name{
+    font-size:14.5px;
+    font-weight:600;
+    color:var(--green-deep);
+    min-height:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .card .unit-label{
+    font-size:11.5px;
+    color:var(--green-mid);
+    letter-spacing:1px;
+  }
+  .card button{
+    margin-top:2px;
+    border:1px solid var(--green-deep);
+    background:transparent;
+    color:var(--green-deep);
+    font-family:'EB Garamond', serif;
+    font-size:13.5px;
+    padding:6px 14px;
+    border-radius:16px;
+    cursor:pointer;
+  }
+  .card button:hover{ background:var(--green-deep); color:var(--cream); }
+  .card.taken{
+    opacity:.55;
+  }
+  .card.taken svg{ stroke:var(--taken); }
+  .card.taken .name{ color:#7a7563; }
+  .card.taken .badge{
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:1px;
+    color:#8a6a3a;
+    border:1px solid #8a6a3a;
+    border-radius:12px;
+    padding:3px 10px;
+  }
+  .pix-wrap{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:22px;
+  }
+  @media (max-width:640px){ .pix-wrap{ grid-template-columns:1fr; } }
+  .pix-left{ text-align:center; padding:6px 8px; }
+  .pix-left p{ font-size:16.5px; }
+  .pix-key{
+    background:var(--card);
+    border:1px solid var(--card-line);
+    border-radius:12px;
+    padding:12px;
+    margin:16px 0 10px;
+  }
+  .pix-key .label{
+    font-family:'Playfair Display', serif;
+    font-size:13px;
+    letter-spacing:2px;
+    color:var(--green-mid);
+  }
+  .pix-key .value{
+    font-family:'Playfair Display', serif;
+    font-size:22px;
+    color:var(--green-deep);
+    margin-top:4px;
+  }
+  .copy-btn{
+    border:none;
+    background:var(--green-deep);
+    color:var(--cream);
+    padding:6px 16px;
+    border-radius:14px;
+    font-size:13px;
+    cursor:pointer;
+    margin-top:4px;
+  }
+  .tier-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+  }
+  .tier{
+    background:var(--green-deep);
+    color:var(--cream);
+    border-radius:14px;
+    padding:14px 10px;
+    text-align:center;
+  }
+  .tier .amount{
+    font-family:'Playfair Display', serif;
+    font-size:19px;
+  }
+  .tier .left{
+    font-size:12.5px;
+    opacity:.85;
+    margin:4px 0 8px;
+  }
+  .tier button{
+    border:1px solid var(--cream);
+    background:transparent;
+    color:var(--cream);
+    font-family:'EB Garamond', serif;
+    font-size:13px;
+    padding:5px 14px;
+    border-radius:14px;
+    cursor:pointer;
+  }
+  .tier button:hover{ background:var(--cream); color:var(--green-deep); }
+  .tier.full{ opacity:.5; }
+  .tier.full button{ display:none; }
+  footer.banner{
+    background:var(--green-deep);
+    color:var(--cream);
+    text-align:center;
+    border-radius:16px;
+    padding:20px;
+    font-family:'Alex Brush', cursive;
+    font-size:28px;
+    margin-top:10px;
+  }
+  .status-msg{
+    text-align:center;
+    font-size:14px;
+    color:var(--green-mid);
+    margin-top:-8px;
+    margin-bottom:18px;
+  }
+  .admin-list{
+    max-width:900px;
+    margin:0 auto 24px;
+    font-size:15px;
+  }
+  .admin-list h4{ color:var(--green-deep); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div class="monogram">V · C</div>
+    <div class="kicker">LISTA DE</div>
+    <div class="script">presentes</div>
+    <div class="couple-pill">VICTOR E CÍNTIA</div>
+    <p class="intro">Nosso maior desejo é iniciar essa nova fase ao seu lado, e cada presente será recebido com muito amor e gratidão!</p>
+  </header>
+
+  <div id="statusMsg" class="status-msg"></div>
+
+  <section class="panel">
+    <div class="panel-title">NOSSOS PRESENTES</div>
+    <div id="giftGrid" class="grid"></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-title">PRESENTES EM PIX</div>
+    <div class="pix-wrap">
+      <div class="pix-left">
+        <p>Se preferir nos presentear em dinheiro, ficaremos muito felizes em receber sua contribuição para a realização dos nossos sonhos e para a construção do nosso novo lar.</p>
+        <div class="pix-key">
+          <div class="label">CHAVE PIX</div>
+          <div class="value">(87) 9 8107-4013</div>
+          <div style="font-size:14px; color:var(--green-mid); margin-top:2px;">Cintia Ranielly Pereira Henrique</div>
+          <button class="copy-btn" onclick="copyPix()">Copiar chave</button>
+        </div>
+        <p style="font-family:'Alex Brush', cursive; font-size:24px; color:var(--green-deep);">Qualquer valor já é um grande presente!</p>
+      </div>
+      <div>
+        <p style="text-align:center; font-size:15px; color:var(--green-mid); margin-top:0;">Você também pode escolher um valor sugerido abaixo.</p>
+        <div id="pixGrid" class="tier-grid"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="banner">Gratidão por fazer parte desse momento tão especial!</footer>
+
+  <div id="adminArea"></div>
+</div>
+
+<div id="modalRoot"></div>
+
+<script>
+const ICONS = {
+  towel: '<rect x="14" y="12" width="36" height="8" rx="2"/><rect x="14" y="24" width="36" height="8" rx="2"/><rect x="14" y="36" width="36" height="8" rx="2"/>',
+  bed: '<rect x="10" y="30" width="44" height="14" rx="2"/><rect x="14" y="20" width="14" height="10" rx="2"/><line x1="10" y1="44" x2="10" y2="50"/><line x1="54" y1="44" x2="54" y2="50"/>',
+  blanket: '<path d="M10 38 Q21 24 32 38 T54 38"/><rect x="10" y="38" width="44" height="10" rx="3"/>',
+  fan: '<circle cx="32" cy="24" r="13"/><path d="M32 24 L21 15 M32 24 L43 15 M32 24 L32 8"/><line x1="32" y1="37" x2="32" y2="52"/><line x1="21" y1="52" x2="43" y2="52"/>',
+  popcorn: '<path d="M20 24 L44 24 L40 52 L24 52 Z"/><circle cx="27" cy="17" r="3"/><circle cx="34" cy="13" r="3"/><circle cx="41" cy="17" r="3"/>',
+  sandwich: '<rect x="10" y="26" width="44" height="14" rx="5"/><line x1="10" y1="26" x2="5" y2="19"/><line x1="54" y1="26" x2="59" y2="19"/>',
+  coffee: '<path d="M18 18 h22 v8 a11 11 0 0 1 -22 0 z"/><rect x="16" y="12" width="26" height="6" rx="2"/><path d="M40 22 q9 0 9 9"/>',
+  plates: '<ellipse cx="32" cy="18" rx="18" ry="5"/><ellipse cx="32" cy="28" rx="18" ry="5"/><ellipse cx="32" cy="38" rx="18" ry="5"/>',
+  roast: '<rect x="12" y="22" width="40" height="18" rx="3"/><line x1="8" y1="29" x2="12" y2="29"/><line x1="52" y1="29" x2="56" y2="29"/>',
+  glasspan: '<rect x="14" y="26" width="36" height="18" rx="2"/><line x1="14" y1="22" x2="50" y2="22"/><circle cx="32" cy="16" r="2.4"/>',
+  potset: '<circle cx="24" cy="32" r="11"/><circle cx="43" cy="26" r="8"/>',
+  pressure: '<rect x="12" y="24" width="40" height="20" rx="10"/><line x1="8" y1="33" x2="12" y2="33"/><line x1="52" y1="33" x2="56" y2="33"/><rect x="27" y="13" width="10" height="8" rx="2"/>',
+  pan: '<circle cx="27" cy="30" r="14"/><line x1="41" y1="30" x2="57" y2="30"/>',
+  airfryer: '<rect x="14" y="10" width="36" height="42" rx="9"/><circle cx="32" cy="23" r="5.5"/>',
+  microwave: '<rect x="8" y="15" width="48" height="34" rx="3"/><rect x="14" y="21" width="26" height="22" rx="2"/><circle cx="48" cy="28" r="2"/><circle cx="48" cy="37" r="2"/>',
+  water: '<path d="M23 12 h18 l-3 18 h-12 z"/><rect x="16" y="30" width="32" height="22" rx="3"/>',
+  containers: '<rect x="11" y="18" width="18" height="26" rx="4"/><rect x="35" y="18" width="18" height="26" rx="4"/>',
+  wine: '<path d="M15 11 h11 l-2 11 a3.5 5 0 0 1 -7 0 z"/><line x1="20.5" y1="22" x2="20.5" y2="38"/><line x1="14" y1="38" x2="27" y2="38"/><path d="M38 11 h11 l-2 11 a3.5 5 0 0 1 -7 0 z"/><line x1="43.5" y1="22" x2="43.5" y2="38"/><line x1="37" y1="38" x2="50" y2="38"/>',
+  processor: '<path d="M22 12 h20 v26 a10 6 0 0 1 -20 0 z"/><line x1="19" y1="40" x2="45" y2="40"/>',
+  cutlery: '<line x1="19" y1="9" x2="19" y2="52"/><line x1="14" y1="9" x2="14" y2="21"/><line x1="24" y1="9" x2="24" y2="21"/><ellipse cx="45" cy="16" rx="6.5" ry="8.5"/><line x1="45" y1="24.5" x2="45" y2="52"/>',
+  mat: '<rect x="11" y="17" width="42" height="30" rx="7"/><line x1="18" y1="26" x2="46" y2="26"/><line x1="18" y1="35" x2="46" y2="35"/>',
+  pillow: '<rect x="13" y="17" width="38" height="30" rx="11"/>',
+  vacuum: '<rect x="24" y="14" width="16" height="26" rx="6"/><line x1="32" y1="14" x2="32" y2="4"/><line x1="20" y1="4" x2="44" y2="4"/><circle cx="26" cy="46" r="4"/><circle cx="38" cy="46" r="4"/><line x1="24" y1="40" x2="16" y2="50"/>',
+  washer: '<rect x="12" y="10" width="40" height="44" rx="6"/><circle cx="32" cy="34" r="14"/><circle cx="32" cy="34" r="8"/><circle cx="19" cy="17" r="2"/><circle cx="26" cy="17" r="2"/>',
+  hood: '<path d="M12 14 L52 14 L42 30 L22 30 Z"/><rect x="27" y="30" width="10" height="14"/><rect x="19" y="44" width="26" height="6" rx="2"/>'
+};
+
+const GIFTS = [
+  {id:'toalha', name:'Kit Toalha de Banho', icon:'towel', qty:3},
+  {id:'cama', name:'Jogo de Cama', icon:'bed', qty:3},
+  {id:'edredom', name:'Edredom', icon:'blanket', qty:3},
+  {id:'ventilador', name:'Ventilador Turbo', icon:'fan', qty:2},
+  {id:'aspirador', name:'Aspirador de Pó', icon:'vacuum', qty:1},
+  {id:'maquina_lavar', name:'Máquina de Lavar', icon:'washer', qty:1},
+  {id:'coifa', name:'Coifa / Exaustor de Fumaça', icon:'hood', qty:1},
+  {id:'pipoqueira', name:'Pipoqueira', icon:'popcorn', qty:1},
+  {id:'sanduicheira', name:'Sanduicheira', icon:'sandwich', qty:1},
+  {id:'cafeteira', name:'Cafeteira', icon:'coffee', qty:1},
+  {id:'jantar', name:'Aparelho de Jantar', icon:'plates', qty:1},
+  {id:'assadeira_inox', name:'Kit Assadeira Inox', icon:'roast', qty:1},
+  {id:'assadeira_vidro', name:'Kit Assadeira de Vidro com Tampa', icon:'glasspan', qty:1},
+  {id:'panela_jogo', name:'Jogo de Panela', icon:'potset', qty:1},
+  {id:'pressao', name:'Panela de Pressão', icon:'pressure', qty:1},
+  {id:'frigideira', name:'Kit Frigideira com Tampa', icon:'pan', qty:1},
+  {id:'airfryer', name:'Fritadeira (Airfryer)', icon:'airfryer', qty:1},
+  {id:'microondas', name:'Microondas', icon:'microwave', qty:1},
+  {id:'gelaagua', name:'Gela Água', icon:'water', qty:1},
+  {id:'potes', name:'Potes Herméticos', icon:'containers', qty:1},
+  {id:'tacas', name:'Jogo Taça de Vinho', icon:'wine', qty:1},
+  {id:'multiprocessador', name:'Multiprocessador', icon:'processor', qty:1},
+  {id:'talheres', name:'Kit de Talher Inox', icon:'cutlery', qty:1},
+  {id:'toalhas_rosto', name:'Jogo de Toalhas de Rosto', icon:'towel', qty:1},
+  {id:'manta', name:'Manta e Cobertor', icon:'blanket', qty:1}
+];
+
+const PIX_TIERS = [
+  {value:150, qty:3},
+  {value:200, qty:3},
+  {value:300, qty:3},
+  {value:400, qty:2},
+  {value:500, qty:2}
+];
+
+// Link do formulário do Tally onde os convidados confirmam o presente escolhido.
+// Ninguém precisa de conta pra preencher — nem no Tally, nem no Claude.
+const TALLY_FORM_URL = 'https://tally.so/r/vGRgG0';
+
+// Presentes já escolhidos: Isaque/Victor/Cíntia atualizam esta lista manualmente
+// conforme as respostas chegam no Tally (peça pra eu atualizar quando quiser).
+// Chave = id do presente + "-" + índice da unidade (começando em 0), ou "pix-VALOR-índice".
+const reservations = {
+  // exemplo: 'toalha-0': 'Maria Silva',
+};
+
+// Reservas feitas neste aparelho: ao clicar em "Escolher este presente", o item fica indisponível.
+let localReserved = {};
+try{ localReserved = JSON.parse(localStorage.getItem('reservasLocais') || '{}') || {}; }catch(e){ localReserved = {}; }
+
+function reserveGift(key){
+  localReserved[key] = true;
+  try{ localStorage.setItem('reservasLocais', JSON.stringify(localReserved)); }catch(e){}
+  setTimeout(renderGifts, 150);
+}
+
+function svgIcon(name){
+  return `<svg viewBox="0 0 64 64">${ICONS[name] || ICONS.pillow}</svg>`;
+}
+
+function renderGifts(){
+  const grid = document.getElementById('giftGrid');
+  grid.innerHTML = '';
+  GIFTS.forEach(g => {
+    for(let i=0; i<g.qty; i++){
+      const key = g.id + '-' + i;
+      const takenBy = reservations[key] || localReserved[key];
+      const card = document.createElement('div');
+      card.className = 'card' + (takenBy ? ' taken' : '');
+      card.innerHTML = `
+        ${svgIcon(g.icon)}
+        <div class="name">${g.name}</div>
+        ${g.qty > 1 ? `<div class="unit-label">Unidade ${i+1} de ${g.qty}</div>` : ''}
+        ${takenBy ? '<div class="badge">Indisponível</div>' : `<a href="${TALLY_FORM_URL}" target="_blank" rel="noopener" style="text-decoration:none;" onclick="reserveGift('${key}')"><button type="button">Escolher este presente</button></a>`}
+      `;
+      grid.appendChild(card);
+    }
+  });
+}
+
+function renderPix(){
+  const grid = document.getElementById('pixGrid');
+  grid.innerHTML = '';
+  PIX_TIERS.forEach(t => {
+    for(let i=0; i<t.qty; i++){
+      const key = 'pix-'+t.value+'-'+i;
+      const takenBy = reservations[key];
+      const tier = document.createElement('div');
+      tier.className = 'tier' + (takenBy ? ' full' : '');
+      tier.innerHTML = `
+        <div class="amount">R$ ${t.value},00</div>
+        <div class="left">${t.qty > 1 ? 'Vaga ' + (i+1) + ' de ' + t.qty : ''}</div>
+        ${takenBy ? '<div style="font-size:12.5px; opacity:.85;">Já escolhido</div>' : `<a href="${TALLY_FORM_URL}" target="_blank" rel="noopener" style="text-decoration:none;"><button type="button">Escolher</button></a>`}
+      `;
+      grid.appendChild(tier);
+    }
+  });
+}
+
+function copyPix(){
+  navigator.clipboard.writeText('87981074013').catch(()=>{});
+  alert('Chave Pix copiada!');
+}
+
+function renderAdminIfNeeded(){
+  const params = new URLSearchParams(window.location.search);
+  if(params.get('admin') !== 'cintiavictor') return;
+  const area = document.getElementById('adminArea');
+  const entries = Object.entries(reservations);
+  let html = '<div class="admin-list"><h4>Presentes já escolhidos (visão privada)</h4>';
+  if(entries.length === 0){
+    html += '<p>Nenhum presente escolhido ainda. As respostas ficam registradas no Tally.</p>';
+  } else {
+    html += '<ul>';
+    entries.forEach(([k,v]) => { html += `<li>${k}: ${v}</li>`; });
+    html += '</ul>';
+  }
+  html += '</div>';
+  area.innerHTML = html;
+}
+
+renderGifts();
+renderPix();
+renderAdminIfNeeded();
+</script>
+</body>
+</html>
